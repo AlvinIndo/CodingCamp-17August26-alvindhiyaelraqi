@@ -1,0 +1,372 @@
+/* css/style.css — Expense & Budget Visualizer */
+
+/* ─── Reset & Base ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px; /* rem anchor */
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #f4f6f9;
+  color: #2c3e50;
+  min-width: 360px; /* Req 7.3: minimum supported width */
+}
+
+/* ─── Typography ───────────────────────────────────────────────────── */
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #34495e;
+}
+
+/* ─── Header / Balance Display ─────────────────────────────────────── */
+/* Req 4.2: Balance_Display placed prominently, always visible */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #2c3e50;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.balance-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+}
+
+.balance-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.balance-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2ecc71;
+}
+
+/* ─── Main Grid Layout ─────────────────────────────────────────────── */
+/* Req 7.1, 7.3: Clear visual hierarchy, responsive layout */
+.app-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "form  chart"
+    "list  list";
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 0 1rem 2rem;
+}
+
+/* ─── Section Cards ─────────────────────────────────────────────────── */
+.form-section,
+.chart-section,
+.list-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.form-section  { grid-area: form;  }
+.chart-section { grid-area: chart; }
+.list-section  { grid-area: list;  }
+
+/* ─── Transaction Form ─────────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  background-color: #fdfdfd;
+  color: #2c3e50;
+  transition: border-color 0.15s ease, outline 0.15s ease;
+}
+
+/* Req 7.4: focus feedback */
+.form-group input:focus,
+.form-group select:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+  border-color: #3498db;
+}
+
+/* ─── Error Messages ────────────────────────────────────────────────── */
+.error-msg {
+  display: block;
+  color: #e74c3c;
+  font-size: 0.8rem;
+  min-height: 1rem; /* prevent layout shift when empty */
+}
+
+/* ─── Submit Button ─────────────────────────────────────────────────── */
+.btn-submit {
+  display: inline-block;
+  width: 100%;
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+/* Req 7.4: hover/active feedback */
+.btn-submit:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+/* ─── Chart Section ─────────────────────────────────────────────────── */
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+#expense-chart {
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chart-empty {
+  font-size: 0.875rem;
+  color: #95a5a6;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+/* ─── Transaction List ──────────────────────────────────────────────── */
+/* Req 3.3: scrollable when items exceed available height */
+.transaction-list {
+  list-style: none;
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-right: 0.25rem; /* space for scrollbar */
+}
+
+/* Scrollbar styling — cosmetic, Webkit only */
+.transaction-list::-webkit-scrollbar {
+  width: 6px;
+}
+.transaction-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+.transaction-list::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 4px;
+}
+
+.transaction-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #ecf0f1;
+  border-radius: 6px;
+  background-color: #fafafa;
+  font-size: 0.9375rem;
+}
+
+.transaction-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0; /* allow text to truncate */
+}
+
+.transaction-item-name {
+  font-weight: 600;
+  color: #2c3e50;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transaction-item-meta {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+}
+
+.transaction-item-amount {
+  font-weight: 700;
+  color: #e74c3c;
+  white-space: nowrap;
+}
+
+/* Category badge */
+.category-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.category-badge--food      { background-color: #fde8ec; color: #c0392b; }
+.category-badge--transport { background-color: #dbeeff; color: #1a6da8; }
+.category-badge--fun       { background-color: #fff8d6; color: #b8860b; }
+
+/* ─── Delete Button ─────────────────────────────────────────────────── */
+/* Req 7.4: clear feedback on interactive controls */
+.btn-delete {
+  flex-shrink: 0;
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  line-height: 1;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.btn-delete:active {
+  background-color: #a93226;
+}
+
+/* ─── Empty State Messages ──────────────────────────────────────────── */
+.list-empty {
+  font-size: 0.875rem;
+  color: #95a5a6;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+/* ─── Storage Warning Banner ────────────────────────────────────────── */
+/* Req 1.4: shown when localStorage is unavailable */
+.storage-warning {
+  background-color: #fef9e7;
+  border-left: 4px solid #f39c12;
+  color: #856404;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+}
+
+/* ─── Chart.js CDN Failure Notice ───────────────────────────────────── */
+/* Req 5.7, 6.1: shown when Chart.js fails to load */
+.chart-unavailable {
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  text-align: center;
+  padding: 2rem 1rem;
+  border: 1px dashed #bdc3c7;
+  border-radius: 6px;
+}
+
+/* ─── Responsive — Mobile < 768px ──────────────────────────────────── */
+/* Req 7.3: usable and readable at minimum 360px */
+@media (max-width: 767px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .balance-display {
+    align-items: flex-start;
+  }
+
+  .balance-amount {
+    font-size: 1.25rem;
+  }
+
+  .app-main {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "form"
+      "chart"
+      "list";
+    margin: 1rem auto;
+    padding: 0 0.75rem 1.5rem;
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  .transaction-list {
+    max-height: 300px;
+  }
+
+  #expense-chart {
+    max-width: 260px;
+  }
+}
+
+/* ─── Responsive — Narrow desktop / tablet 768px–1023px ────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app-main {
+    max-width: 800px;
+    gap: 1rem;
+    padding: 0 1rem 1.5rem;
+  }
+}

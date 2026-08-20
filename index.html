@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense &amp; Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- 1. Header / Balance -->
+  <header class="app-header">
+    <h1>Expense Tracker</h1>
+    <div id="balance-display" class="balance-display">
+      <span class="balance-label">Total Pengeluaran</span>
+      <span id="balance-amount" class="balance-amount">Rp 0</span>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- 2. Form -->
+    <section class="form-section" aria-label="Tambah Transaksi">
+      <h2>Tambah Transaksi</h2>
+      <form id="transaction-form" novalidate>
+        <div class="form-group">
+          <label for="item-name">Nama Item</label>
+          <input type="text" id="item-name" name="itemName"
+                 placeholder="Contoh: Nasi Goreng" autocomplete="off" />
+          <span class="error-msg" id="error-item-name" aria-live="polite"></span>
+        </div>
+        <div class="form-group">
+          <label for="amount">Jumlah (Rp)</label>
+          <input type="number" id="amount" name="amount"
+                 min="1" step="any" placeholder="Contoh: 25000" />
+          <span class="error-msg" id="error-amount" aria-live="polite"></span>
+        </div>
+        <div class="form-group">
+          <label for="category">Kategori</label>
+          <select id="category" name="category">
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Fun">Fun</option>
+          </select>
+          <span class="error-msg" id="error-category" aria-live="polite"></span>
+        </div>
+        <button type="submit" class="btn-submit">Tambah</button>
+      </form>
+    </section>
+
+    <!-- 3. Chart -->
+    <section class="chart-section" aria-label="Distribusi Pengeluaran">
+      <h2>Distribusi per Kategori</h2>
+      <div id="chart-container" class="chart-container">
+        <canvas id="expense-chart"></canvas>
+        <p id="chart-empty-msg" class="chart-empty" hidden>
+          Belum ada transaksi. Tambahkan transaksi untuk melihat grafik.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Transaction List -->
+    <section class="list-section" aria-label="Daftar Transaksi">
+      <h2>Daftar Transaksi</h2>
+      <ul id="transaction-list" class="transaction-list" aria-live="polite">
+        <!-- Transaction items dirender oleh JS -->
+      </ul>
+      <p id="list-empty-msg" class="list-empty" hidden>
+        Belum ada transaksi tercatat.
+      </p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
